@@ -1,5 +1,5 @@
 {
-  "name": "audio-solutions",
+  "name": "digital-twin",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -11,7 +11,8 @@
   "dependencies": {
     "@babel/types": "^7.24.9",
     "@types/howler": "^2.2.11",
-    "@types/three": "^0.164.0",
+    "@types/node": "^22.0.0",
+    "@types/three": "^0.167.1",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.8",
     "gsap": "^3.12.5",

@@ -6,8 +6,6 @@ import tailwindcss from "tailwindcss"; // 导入tailwindcss
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./",
-  publicDir: "./static",
   assetsInclude: ["**/*.glb", "**/*.hdr", "**/*.mp3", "**/*.ico","**/*.svg"],
   server: {
     port: 9712,
@@ -15,7 +13,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-      "@static": path.resolve(__dirname, "static"),
       "@assets": path.resolve(__dirname, "src/assets"),
       "@shaders": path.resolve(__dirname, "src/shaders"),
       "@utils": path.resolve(__dirname, "src/utils"),
