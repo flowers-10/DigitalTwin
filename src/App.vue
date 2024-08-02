@@ -65,18 +65,18 @@ let buildingTransparent: any = null;
 let lift: any = null;
 let buildingMain: any = null;
 
-gltfLoader.load("models/smartBusiness/building-transparent.glb", (gltf) => {
+gltfLoader.load("models/smartBusiness/building-transparent.glb", (gltf:any) => {
   const model = gltf.scene;
   model.name = "building-transparent";
   buildingTransparent = model;
 });
-gltfLoader.load("models/smartBusiness/lift.glb", (gltf) => {
+gltfLoader.load("models/smartBusiness/lift.glb", (gltf:any) => {
   const model = gltf.scene;
   model.name = "lift";
   lift = model;
 });
 
-gltfLoader.load("models/smartBusiness/building-main.glb", (gltf) => {
+gltfLoader.load("models/smartBusiness/building-main.glb", (gltf:any) => {
   const model = gltf.scene;
   model.name = "building-main";
   buildingMain = model;
@@ -92,7 +92,7 @@ onMounted(async () => {
   const scene = new THREE.Scene();
 
   /* Object */
-  gltfLoader.load("models/smartBusiness/plane.glb", (gltf) => {
+  gltfLoader.load("models/smartBusiness/plane.glb", (gltf:any) => {
     const model = gltf.scene;
     model.name = "plane";
     smartBusiness.add(model);
@@ -110,7 +110,7 @@ onMounted(async () => {
       value: new THREE.Color("#1B3045"),
     },
   };
-  gltfLoader.load("models/smartBusiness/building-other.glb", (gltf) => {
+  gltfLoader.load("models/smartBusiness/building-other.glb", (gltf:any) => {
     const model = gltf.scene;
     model.name = "building-other";
     // model.children[0].children.forEach((item: any) => {
@@ -126,17 +126,17 @@ onMounted(async () => {
     // });
     smartBusiness.add(model.children[0]);
   });
-  gltfLoader.load("models/smartBusiness/tree.glb", (gltf) => {
+  gltfLoader.load("models/smartBusiness/tree.glb", (gltf:any) => {
     const model = gltf.scene;
     model.name = "tree";
     smartBusiness.add(model);
   });
-  gltfLoader.load("models/smartBusiness/road-old.glb", (gltf) => {
+  gltfLoader.load("models/smartBusiness/road-old.glb", (gltf:any) => {
     const model = gltf.scene;
     model.name = "road-old";
     smartBusiness.add(model);
   });
-  gltfLoader.load("models/smartBusiness/road.glb", (gltf) => {
+  gltfLoader.load("models/smartBusiness/road.glb", (gltf:any) => {
     const model = gltf.scene;
     model.name = "road";
     smartBusiness.add(model);
