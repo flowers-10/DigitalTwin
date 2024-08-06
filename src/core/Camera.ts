@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import ThreeInstance from "./ThreeInstance";
-import { CameraConfig } from "@utils/helper/configHelper";
+import { CameraConfig } from "@utils/types/configOptType";
 
 export default class Camera {
   private experience: ThreeInstance;
@@ -12,8 +12,8 @@ export default class Camera {
   public instance: THREE.PerspectiveCamera;
   public controls: OrbitControls;
 
-  constructor(config: CameraConfig) {
-    this.experience = ThreeInstance.shared;
+  constructor(config: CameraConfig,instance:ThreeInstance) {
+    this.experience = instance;
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
     this.canvas = this.experience._canvas;

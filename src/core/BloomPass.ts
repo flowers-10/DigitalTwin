@@ -4,7 +4,7 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import ThreeInstance from "./ThreeInstance";
-import { BloomConfigType } from "@utils/helper/configHelper";
+import { BloomConfigType } from "@utils/types/configOptType";
 
 export default class BloomPass {
   private experience: ThreeInstance;
@@ -16,8 +16,8 @@ export default class BloomPass {
   private darkMaterial;
   private bloomComposer;
   private finalComposer;
-  constructor(config: BloomConfigType) {
-    this.experience = ThreeInstance.shared;
+  constructor(config: BloomConfigType,instance: ThreeInstance) {
+    this.experience = instance;
     this.scene = this.experience.scene;
     this.camera = this.experience.camera.instance;
     this.renderer = this.experience.renderer.instance;

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import EventEmitter from "./EventEmitter.js";
-import { SourcesItems } from "@utils/helper/configHelper.js";
+import { SourcesItems } from "@utils/types/configOptType";
 
 type Loaders = {
   gltfLoader: GLTFLoader;
@@ -36,9 +36,6 @@ export default class Resources extends EventEmitter {
   }
 
   startLoading() {
-    // const domainName = location.origin;
-    // console.log(domainName);
-
     // Load each source
     for (const source of this.sources) {
       if (source.type === "GLTF") {

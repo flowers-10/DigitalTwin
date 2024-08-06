@@ -1,5 +1,5 @@
 import EventEmitter from "./EventEmitter";
-import { sizeConfigType } from "@utils/helper/configHelper";
+import { sizeConfigType } from "@utils/types/configOptType";
 
 export default class Sizes extends EventEmitter {
   public width: number;
@@ -12,9 +12,7 @@ export default class Sizes extends EventEmitter {
     this.height = 100;
     this.pixelRatio = Math.min(window.devicePixelRatio, 2);
     this.resizeHandler = () => {
-      this.width = window.innerWidth;
-      this.height = window.innerHeight;
-      if (config && config.id) {
+      if (config.type === 'parent') {
         const dom = document.getElementById(config.id);
         if (dom) {
           const container = dom.parentElement;
@@ -32,6 +30,9 @@ export default class Sizes extends EventEmitter {
             "tips: Could not find parent element ID, please check the configuration"
           );
         }
+      }else {
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
       }
 
       if (this.height < 200) {
