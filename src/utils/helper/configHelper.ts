@@ -26,34 +26,47 @@ type LightItems = {
   position: PositionType;
 };
 
+export type sizeConfigType = {
+  type: SizeType;
+  id: string;
+};
+export type CameraConfig = {
+  fov: number;
+  near: number;
+  far: number;
+  position: PositionType;
+  lookAt: boolean;
+  controls: {
+    show: boolean;
+    enableDamping: boolean;
+    minPolarAngle: number;
+    maxPolarAngle: number;
+    minAzimuthAngle: number;
+    maxAzimuthAngle: number;
+    enablePan: boolean;
+  };
+};
+
+export type rendererConfig = {
+  antialias: boolean;
+  alpha: boolean;
+  clearAlpha: number;
+  clearColor: string;
+};
+
 export interface ConfigOptions {
   el: string;
   id: string;
   type: ConfigType;
   name: string;
-  camera: {
-    fov: number;
-    near: number;
-    far: number;
-    position: PositionType;
-    lookAt: boolean;
-    controls: {};
-  };
-  size: {
-    type: SizeType;
-    id: string;
-  };
+  camera: CameraConfig;
+  size: sizeConfigType;
   rendererPass: {
     type: PassType;
     outlineConfig: {};
     bloomConfig: {};
   };
-  renderer: {
-    antialias: boolean;
-    alpha: boolean;
-    clearAlpha: number;
-    clearColor: string;
-  };
+  renderer: rendererConfig;
   light: LightItems[];
   sources: SourcesItems[];
 }
@@ -126,7 +139,5 @@ export const configOptions: ConfigOptions = {
       },
     },
   ],
-  sources: [
-    
-  ],
+  sources: [],
 };

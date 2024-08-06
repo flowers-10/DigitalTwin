@@ -2,24 +2,40 @@ import { ConfigOptions, configOptions } from "@utils/helper/configHelper";
 import * as THREE from "three";
 import Mousemove from "./Mousemove";
 import Resources from "./Resources";
+import Sizes from "./Sizes";
+import Camera from "./Camera";
+import Renderer from "./Renderer";
 
 export default class ThreeInstance {
-  private static __ins: ThreeInstance;
-  private _canvas: HTMLCanvasElement | null;
-  private scene: THREE.Scene;
-  private mousemove: Mousemove;
-  private resources: Resources;
+  public static __ins: ThreeInstance;
+  public _canvas: HTMLCanvasElement;
+  public scene: THREE.Scene;
+  public mousemove: Mousemove;
+  public resources: Resources;
+  public sizes: Sizes;
+  public camera: Camera;
+  public renderer: Renderer;
+  public _config: ConfigOptions;
   constructor(
     canvas: HTMLCanvasElement | null,
     config: ConfigOptions = configOptions
   ) {
-    this._canvas =
-      canvas || (document.getElementById(config.id) as HTMLCanvasElement);
-    const { sources } = config;
+    const canvass = document.getElementById(config.id);
+    if (!canvass && !canvas) {
+      throw new Error("canvas has already been initialized.");
+    }
+    this._canvas = canvas || (canvass as HTMLCanvasElement);
+    this._config = config;
     this.scene = new THREE.Scene();
     this.mousemove = new Mousemove(this._canvas);
-    this.resources = new Resources(sources);
-    
+    this.resources = new Resources(this._config.sources);
+    this.sizes = new Sizes(this._config.size);
+    this.camera = new Camera(this._config.camera);
+    this.renderer = new Renderer(this._config.renderer);
+  }
+
+  public setOption(option: any) {
+    this._config = { ...this._config, ...option };
   }
 
   public static get shared(): ThreeInstance {

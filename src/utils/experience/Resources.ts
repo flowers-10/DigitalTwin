@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import EventEmitter from "./EventEmitter.js";
-import { SourcesItems } from "../helper/configHelper.js";
+import { SourcesItems } from "@utils/helper/configHelper.js";
 
 type Loaders = {
   gltfLoader: GLTFLoader;
