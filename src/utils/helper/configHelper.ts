@@ -54,6 +54,11 @@ export type rendererConfig = {
   clearColor: string;
 };
 
+export type BloomConfigType = {
+  strength: number;
+  radius: number;
+  threshold: number;
+};
 export interface ConfigOptions {
   el: string;
   id: string;
@@ -64,7 +69,7 @@ export interface ConfigOptions {
   rendererPass: {
     type: PassType;
     outlineConfig: {};
-    bloomConfig: {};
+    bloomConfig: BloomConfigType;
   };
   renderer: rendererConfig;
   light: LightItems[];

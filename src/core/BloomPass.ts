@@ -3,11 +3,21 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-import ThreeInstance from './ThreeInstance'
+import ThreeInstance from "./ThreeInstance";
+import { BloomConfigType } from "@utils/helper/configHelper";
 
 export default class BloomPass {
-  constructor() {
-    this.experience = ThreeInstance.shared
+  private experience: ThreeInstance;
+  private scene;
+  private renderer;
+  private camera;
+  private bloomLayer;
+  private materials: any;
+  private darkMaterial;
+  private bloomComposer;
+  private finalComposer;
+  constructor(config: BloomConfigType) {
+    this.experience = ThreeInstance.shared;
     this.scene = this.experience.scene;
     this.camera = this.experience.camera.instance;
     this.renderer = this.experience.renderer.instance;
@@ -19,32 +29,24 @@ export default class BloomPass {
     this.materials = {};
     // 将未应用辉光效果的物体暗化
     this.darkMaterial = new THREE.MeshBasicMaterial({ color: "black" });
-    this.createPass();
-  }
-  createPass() {
-    // 渲染场景的Pass
     const renderPass = new RenderPass(this.scene, this.camera);
-    // bloomComposer效果合成器 产生辉光，但是不渲染到屏幕上
     this.bloomComposer = new EffectComposer(this.renderer);
-    this.bloomComposer.renderToScreen = false; // 不渲染到屏幕上
+    this.bloomComposer.renderToScreen = false;
     this.bloomComposer.addPass(renderPass);
-    // 最终真正渲染到屏幕上的效果合成器 finalComposer
     this.finalComposer = new EffectComposer(this.renderer);
     this.finalComposer.addPass(renderPass);
 
-    // 辉光Pass
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(
         this.renderer.domElement.offsetWidth,
         this.renderer.domElement.offsetHeight
       ),
-      0.8, // 强度参数
-      0.5, // 半径参数
-      0.5 // 阈值参数
+      config.strength,
+      config.radius,
+      config.threshold
     );
     this.bloomComposer.addPass(bloomPass);
 
-    // 使用自定义着色器的Pass，实现叠加基础纹理和辉光纹理的效果
     const shaderPass = new ShaderPass(
       new THREE.ShaderMaterial({
         uniforms: {
@@ -71,7 +73,7 @@ export default class BloomPass {
     this.finalComposer.addPass(shaderPass);
   }
 
-  darkenNonBloomed = (obj) => {
+  darkenNonBloomed = (obj: any) => {
     if (obj.isMesh && this.bloomLayer.test(obj.layers) === false) {
       // 保存原始材质
       this.materials[obj.uuid] = obj.material;
@@ -80,7 +82,7 @@ export default class BloomPass {
     }
   };
   // 对所有材质更改
-  restoreMaterial = (obj) => {
+  restoreMaterial = (obj: any) => {
     if (this.materials[obj.uuid]) {
       // 恢复原始材质
       obj.material = this.materials[obj.uuid];

@@ -5,6 +5,7 @@ import Resources from "./Resources";
 import Sizes from "./Sizes";
 import Camera from "./Camera";
 import Renderer from "./Renderer";
+import BloomPass from './BloomPass'
 
 export default class ThreeInstance {
   public static __ins: ThreeInstance;
@@ -16,8 +17,9 @@ export default class ThreeInstance {
   public camera: Camera;
   public renderer: Renderer;
   public _config: ConfigOptions;
+  private bloomPass
   constructor(
-    canvas: HTMLCanvasElement | null,
+    canvas?: HTMLCanvasElement,
     config: ConfigOptions = configOptions
   ) {
     const canvass = document.getElementById(config.id);
@@ -32,6 +34,19 @@ export default class ThreeInstance {
     this.sizes = new Sizes(this._config.size);
     this.camera = new Camera(this._config.camera);
     this.renderer = new Renderer(this._config.renderer);
+
+    switch (this._config.rendererPass.type) {
+      case 'OUTLINE':
+      
+        break
+      case 'BLOOM':
+        this.bloomPass = new BloomPass(this._config.rendererPass.bloomConfig) 
+        break
+      case 'NONE':
+        break
+      default:
+        break
+    }
   }
 
   public setOption(option: any) {
@@ -40,7 +55,7 @@ export default class ThreeInstance {
 
   public static get shared(): ThreeInstance {
     if (!this.__ins) {
-      this.__ins = new ThreeInstance(null, configOptions);
+      this.__ins = new ThreeInstance(undefined, configOptions);
       (window as any).__threeInstance = ThreeInstance;
     }
 
