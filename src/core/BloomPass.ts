@@ -5,10 +5,9 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import ThreeInstance from "./ThreeInstance";
 import BaseThree from "./BaseThree";
-import { BloomConfigType } from "@utils/types/configOptType";
+import { BloomConfigType } from "@utils/types/ConfigOptType";
 
 export default class BloomPass extends BaseThree {
-  private camera;
   private renderer;
   private bloomLayer;
   private materials: any;
@@ -17,7 +16,6 @@ export default class BloomPass extends BaseThree {
   private finalComposer;
   constructor(config: BloomConfigType, instance: ThreeInstance) {
     super(instance);
-    this.camera = instance.camera.instance;
     this.renderer = instance.renderer.instance;
     this.bloomLayer = new THREE.Layers();
     this.materials = {};
@@ -29,7 +27,7 @@ export default class BloomPass extends BaseThree {
   setBloomPass(config: BloomConfigType) {
     const BLOOM_LAYER = 1;
     this.bloomLayer.set(BLOOM_LAYER);
-    const renderPass = new RenderPass(this.scene, this.camera);
+    const renderPass = new RenderPass(this.scene, this._camera);
     this.bloomComposer.renderToScreen = false;
     this.bloomComposer.addPass(renderPass);
     this.finalComposer.addPass(renderPass);

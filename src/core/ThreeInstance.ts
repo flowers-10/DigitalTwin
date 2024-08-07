@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-import { ConfigOptType } from "@utils/types/configOptType";
+import { ConfigOptType } from "@utils/types/ConfigOptType";
 import { CONFIG_OPT } from "@utils/config/configOpt";
 import Mousemove from "./Mousemove";
 import Resources from "./Resources";

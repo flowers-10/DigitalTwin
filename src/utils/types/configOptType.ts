@@ -30,7 +30,7 @@ export type LightItems = {
   decay?: number;
 };
 
-export type sizeConfigType = {
+export type SizeConfigType = {
   type: SizeType;
   id: string;
 };
@@ -51,7 +51,7 @@ export type CameraConfig = {
   };
 };
 
-export type rendererConfig = {
+export type RendererConfig = {
   antialias: boolean;
   alpha: boolean;
   clearAlpha: number;
@@ -71,13 +71,13 @@ export interface ConfigOptType {
   type: ConfigType;
   name: string;
   camera: CameraConfig;
-  size: sizeConfigType;
+  size: SizeConfigType;
   rendererPass: {
     type: PassType;
     outlineConfig: {};
     bloomConfig: BloomConfigType;
   };
-  renderer: rendererConfig;
+  renderer: RendererConfig;
   light: LightItems[];
   sources: SourcesItems[];
 }

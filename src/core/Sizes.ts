@@ -1,12 +1,12 @@
 import EventEmitter from "./EventEmitter";
-import { sizeConfigType } from "@utils/types/configOptType";
+import { SizeConfigType } from "@utils/types/ConfigOptType";
 
 export default class Sizes extends EventEmitter {
   public width: number;
   public height: number;
   public pixelRatio: number;
   private resizeHandler: () => void;
-  constructor(config: sizeConfigType) {
+  constructor(config: SizeConfigType) {
     super();
     this.width = 100;
     this.height = 100;

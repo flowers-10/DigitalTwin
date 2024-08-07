@@ -1,15 +1,13 @@
 import * as THREE from "three";
 import ThreeInstance from "./ThreeInstance";
 import BaseThree from "./BaseThree";
-import { rendererConfig } from "@utils/types/configOptType";
+import { RendererConfig } from "@utils/types/ConfigOptType";
 
 export default class Renderer extends BaseThree{
-    private camera;
     public instance: THREE.WebGLRenderer;
 
-    constructor(config: rendererConfig, instance: ThreeInstance) {
+    constructor(config: RendererConfig, instance: ThreeInstance) {
         super(instance)
-        this.camera = instance.camera;
         this.instance = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: config.antialias,
@@ -18,7 +16,7 @@ export default class Renderer extends BaseThree{
         this.setRenderer(config)
     }
 
-    setRenderer(config:rendererConfig): void {
+    setRenderer(config:RendererConfig): void {
         // this.instance.useLegacyLights = true
         // this.instance.toneMapping = THREE.CineonToneMapping
         // this.instance.toneMappingExposure = 1.75

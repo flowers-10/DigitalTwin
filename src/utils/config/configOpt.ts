@@ -1,4 +1,4 @@
-import { ConfigOptType } from '@utils/types/configOptType'
+import { ConfigOptType } from '@utils/types/ConfigOptType'
 
 export const CONFIG_OPT: ConfigOptType = {
   el: "_canvas-scene",
