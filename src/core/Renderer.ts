@@ -1,26 +1,24 @@
 import * as THREE from "three";
 import ThreeInstance from "./ThreeInstance";
+import BaseThree from "./BaseThree";
 import { rendererConfig } from "@utils/types/configOptType";
 
-export default class Renderer {
-    private experience: ThreeInstance;
-    private scene;
-    private canvas;
-    private sizes;
+export default class Renderer extends BaseThree{
     private camera;
     public instance: THREE.WebGLRenderer;
 
     constructor(config: rendererConfig, instance: ThreeInstance) {
-        this.experience = instance;
-        this.canvas = this.experience._canvas;
-        this.sizes = this.experience.sizes;
-        this.scene = this.experience.scene;
-        this.camera = this.experience.camera;
+        super(instance)
+        this.camera = instance.camera;
         this.instance = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: config.antialias,
             alpha: config.alpha,
         });
+        this.setRenderer(config)
+    }
+
+    setRenderer(config:rendererConfig): void {
         // this.instance.useLegacyLights = true
         // this.instance.toneMapping = THREE.CineonToneMapping
         // this.instance.toneMappingExposure = 1.75
@@ -35,6 +33,10 @@ export default class Renderer {
         this.instance.setSize(this.sizes.width, this.sizes.height);
         this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
     }
+    info(message = "present memory:") {
+        console.log(message, this.instance.info.memory);
+    }
+
     resize() {
         this.instance.setSize(this.sizes?.width, this.sizes.height);
         this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
@@ -42,10 +44,6 @@ export default class Renderer {
 
     update() {
         this.instance.render(this.scene, this.camera?.instance);
-    }
-
-    info(message = "present memory:") {
-        console.log(message, this.instance.info.memory);
     }
 
     dispose() {

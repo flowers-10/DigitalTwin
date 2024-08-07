@@ -4,36 +4,34 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import ThreeInstance from "./ThreeInstance";
+import BaseThree from "./BaseThree";
 import { BloomConfigType } from "@utils/types/configOptType";
 
-export default class BloomPass {
-  private experience: ThreeInstance;
-  private scene;
-  private renderer;
+export default class BloomPass extends BaseThree {
   private camera;
+  private renderer;
   private bloomLayer;
   private materials: any;
   private darkMaterial;
   private bloomComposer;
   private finalComposer;
-  constructor(config: BloomConfigType,instance: ThreeInstance) {
-    this.experience = instance;
-    this.scene = this.experience.scene;
-    this.camera = this.experience.camera.instance;
-    this.renderer = this.experience.renderer.instance;
-    // 后处理渲染图层（总共可后处理31层）
-    const BLOOM_LAYER = 1;
+  constructor(config: BloomConfigType, instance: ThreeInstance) {
+    super(instance);
+    this.camera = instance.camera.instance;
+    this.renderer = instance.renderer.instance;
     this.bloomLayer = new THREE.Layers();
-    this.bloomLayer.set(BLOOM_LAYER);
-    // 存储需要应用辉光效果的材质对象
     this.materials = {};
-    // 将未应用辉光效果的物体暗化
     this.darkMaterial = new THREE.MeshBasicMaterial({ color: "black" });
-    const renderPass = new RenderPass(this.scene, this.camera);
     this.bloomComposer = new EffectComposer(this.renderer);
+    this.finalComposer = new EffectComposer(this.renderer);
+    this.setBloomPass(config);
+  }
+  setBloomPass(config: BloomConfigType) {
+    const BLOOM_LAYER = 1;
+    this.bloomLayer.set(BLOOM_LAYER);
+    const renderPass = new RenderPass(this.scene, this.camera);
     this.bloomComposer.renderToScreen = false;
     this.bloomComposer.addPass(renderPass);
-    this.finalComposer = new EffectComposer(this.renderer);
     this.finalComposer.addPass(renderPass);
 
     const bloomPass = new UnrealBloomPass(
@@ -72,19 +70,14 @@ export default class BloomPass {
     shaderPass.needsSwap = true;
     this.finalComposer.addPass(shaderPass);
   }
-
   darkenNonBloomed = (obj: any) => {
     if (obj.isMesh && this.bloomLayer.test(obj.layers) === false) {
-      // 保存原始材质
       this.materials[obj.uuid] = obj.material;
-      // 应用暗化材质
       obj.material = this.darkMaterial;
     }
   };
-  // 对所有材质更改
   restoreMaterial = (obj: any) => {
     if (this.materials[obj.uuid]) {
-      // 恢复原始材质
       obj.material = this.materials[obj.uuid];
       delete this.materials[obj.uuid];
     }

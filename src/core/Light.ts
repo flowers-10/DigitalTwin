@@ -1,14 +1,12 @@
 import * as THREE from "three";
 import ThreeInstance from "./ThreeInstance";
+import BaseThree from "./BaseThree";
 import { LightItems } from "@utils/types/configOptType";
 
-export default class Light {
-    private experience: ThreeInstance;
-    private scene;
+export default class Light extends BaseThree{
     private light;
     constructor(config: LightItems[],instance:ThreeInstance) {
-        this.experience = instance;
-        this.scene = this.experience.scene;
+        super(instance)
         this.light = new THREE.Group();
         this.light.name = "light-group";
         this.setLight(config);
