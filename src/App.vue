@@ -6,13 +6,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted,onBeforeUnmount } from "vue";
-import useThree from "./hook/useThree";
-const aa = ref();
+import useThree from "@hook/useThree";
+const canvasDom = ref();
 const instance = ref();
 
 onMounted(() => { 
-  instance.value = useThree(aa.value);
+  instance.value = useThree(canvasDom.value);
   instance.value.renderer.info()
+
 });
 onBeforeUnmount(() => {
   instance.value.dispose();

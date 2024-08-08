@@ -5,7 +5,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import ThreeInstance from "./ThreeInstance";
 import BaseThree from "./BaseThree";
-import { BloomConfigType } from "@utils/types/ConfigOptType";
+import { BloomConfigType } from "@core/types/ConfigOptType";
 
 export default class BloomPass extends BaseThree {
   private renderer;

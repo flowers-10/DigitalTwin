@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import ThreeInstance from "./ThreeInstance";
 import BaseThree from './BaseThree'
-import { CameraConfig } from "@utils/types/ConfigOptType";
+import { CameraConfig } from "@core/types/ConfigOptType";
 
 
 export default class Camera extends BaseThree{

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import ThreeInstance from "./ThreeInstance";
 import BaseThree from "./BaseThree";
-import { ExtendType } from "@utils/types/ExtendType";
+import { ExtendType } from "./types/ExtendType";
 
 // import { eventBus } from '@BI/utils/eventBus'
 export default class Sprite extends BaseThree {
@@ -42,7 +42,7 @@ export default class Sprite extends BaseThree {
                
                 type NewSprite = ExtendType<THREE.Sprite,'properties',any>
                 const sprite = new THREE.Sprite(spriteMaterial) as NewSprite
-                sprite.scale.set(item.scaleX, item.scaleY, 1); //只需要设置x、y两个分量就可以
+                sprite.scale.set(item.scaleX, item.scaleY, 1); 
                 sprite.position.set(item.x, item.y, item.z);
                 sprite.properties = item;
                 this.spriteGroup.add(sprite);

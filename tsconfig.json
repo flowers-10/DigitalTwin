@@ -22,6 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@utils/*": ["src/utils/*"],
+      "@core/*": ["src/core/*"],
+      "@hook/*": ["src/hook/*"],
       "@assets/*": ["src/assets/*"],
       "@shaders/*": ["src/shader/*"],
       "@components/*": ["src/components/*"],

@@ -1,5 +1,5 @@
 import EventEmitter from "./EventEmitter";
-import { SizeConfigType } from "@utils/types/ConfigOptType";
+import { SizeConfigType } from "@core/types/ConfigOptType";
 
 export default class Sizes extends EventEmitter {
   public width: number;

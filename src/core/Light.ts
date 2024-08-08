@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import ThreeInstance from "./ThreeInstance";
 import BaseThree from "./BaseThree";
-import { LightItems } from "@utils/types/ConfigOptType";
+import { LightItems } from "@core/types/ConfigOptType";
 
 export default class Light extends BaseThree{
     private light;
