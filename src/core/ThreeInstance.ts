@@ -10,6 +10,7 @@ import Renderer from "./Renderer";
 import BloomPass from "./BloomPass";
 import Light from "./Light";
 import Time from "./Time";
+import Raycaster from "./Raycaster";
 
 export default class ThreeInstance {
   public static __ins: ThreeInstance;
@@ -23,6 +24,7 @@ export default class ThreeInstance {
   public _config: ConfigOptType;
   public light: Light;
   public time: Time;
+  public raycaster: Raycaster;
   private bloomPass;
 
   constructor(canvas?: HTMLCanvasElement, config: ConfigOptType = CONFIG_OPT) {
@@ -40,6 +42,7 @@ export default class ThreeInstance {
     this.time = new Time();
     this.camera = new Camera(this._config.camera, this);
     this.light = new Light(this._config.light, this);
+    this.raycaster = new Raycaster(this)
 
     switch (this._config.rendererPass.type) {
       case "OUTLINE":
@@ -76,6 +79,7 @@ export default class ThreeInstance {
 
   update() {
     this.camera?.update();
+    this.raycaster.update();
     switch (this._config.rendererPass.type) {
       case "OUTLINE":
         break;

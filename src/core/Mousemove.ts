@@ -3,8 +3,8 @@ import EventEmitter from "./EventEmitter";
 
 export default class Mousemove extends EventEmitter {
   private canvas: HTMLCanvasElement;
-  private eventOffset: { x: number; y: number };
-  private mouse: THREE.Vector2;
+  public eventOffset: { x: number; y: number };
+  public mouse: THREE.Vector2;
   private mouseMoveHandler: (event: MouseEvent) => void;
 
   constructor(canvas: HTMLCanvasElement) {

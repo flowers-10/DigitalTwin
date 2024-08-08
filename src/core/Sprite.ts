@@ -22,12 +22,10 @@ export default class Sprite extends BaseThree {
         this.spriteGroup.name = "location-tips";
         //  wait
         this.resources.on("ready", async () => {
-            // this.projection = await this.experience.world?.map3D?.getProjection();
-            // if (!this.projection) return;
             // Setup
             data.forEach((item:any) => {
                 const texture = this.resources.items[item.texture];
-                texture.encoding = THREE.sRGBEncoding;
+                texture.colorSpace = THREE.SRGBColorSpace;
                 const spriteMaterial = new THREE.SpriteMaterial({
                     map: texture, //设置精灵纹理贴图
                 });
@@ -42,13 +40,10 @@ export default class Sprite extends BaseThree {
                     );
                 };
                
-                type NewSprite = ExtendType<THREE.Sprite,'properties'>
+                type NewSprite = ExtendType<THREE.Sprite,'properties',any>
                 const sprite = new THREE.Sprite(spriteMaterial) as NewSprite
                 sprite.scale.set(item.scaleX, item.scaleY, 1); //只需要设置x、y两个分量就可以
-
-                const [x, y] = this.projection([item.longitude, item.latitude]);
-                sprite.position.set(x, -y, item.z);
-                
+                sprite.position.set(item.x, item.y, item.z);
                 sprite.properties = item;
                 this.spriteGroup.add(sprite);
             });
