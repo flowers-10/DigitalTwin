@@ -1,7 +1,6 @@
 import ThreeInstance from "@core/ThreeInstance";
-import { ConfigOptType } from "@core/types/ConfigOptType";
 
-const useThree = (canvas: HTMLCanvasElement, config?: ConfigOptType) => {
+const useThree = (canvas: HTMLCanvasElement, config?:any) => {
   const instance: ThreeInstance = new ThreeInstance(canvas, config);
   return instance;
 };

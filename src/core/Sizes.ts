@@ -38,14 +38,13 @@ export default class Sizes extends EventEmitter {
       if (this.height < 200) {
         this.height = 1080;
       }
-      this.info()
       this.trigger("resize", null);
     };
     this.resizeHandler();
     window.addEventListener("resize", this.resizeHandler);
   }
-  info(message = "Size changed,Present width and height:") {
-    console.log(message, this.width, this.height);
+  info(message = "Now size") {
+    console.log(message, 'width:',this.width,'height:', this.height);
   }
   release() {
     window.removeEventListener("resize", this.resizeHandler);

@@ -42,7 +42,7 @@ export default class ThreeInstance {
     this.time = new Time();
     this.camera = new Camera(this._config.camera, this);
     this.light = new Light(this._config.light, this);
-    this.raycaster = new Raycaster(this)
+    this.raycaster = new Raycaster(this);
 
     switch (this._config.rendererPass.type) {
       case "OUTLINE":
@@ -70,6 +70,7 @@ export default class ThreeInstance {
 
   public setOption(option: any) {
     this._config = { ...this._config, ...option };
+    
   }
 
   resize() {
@@ -95,14 +96,14 @@ export default class ThreeInstance {
     }
   }
 
-  clearGroup(group:any) {
+  clearGroup(group: any) {
     if (!group.children.length) return;
-    const clearCache = (item:any) => {
+    const clearCache = (item: any) => {
       item.geometry?.dispose();
     };
-    const removeObj = (obj:any) => {
-      let arr = obj.children.filter((x:any) => x);
-      arr.forEach((item:any) => {
+    const removeObj = (obj: any) => {
+      let arr = obj.children.filter((x: any) => x);
+      arr.forEach((item: any) => {
         if (item.children.length) {
           removeObj(item);
         } else {
