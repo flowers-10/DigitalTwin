@@ -12,7 +12,7 @@ export default class Sizes extends EventEmitter {
     this.height = 100;
     this.pixelRatio = Math.min(window.devicePixelRatio, 2);
     this.resizeHandler = () => {
-      if (config.type === 'parent') {
+      if (config.type === "parent") {
         const dom = document.getElementById(config.id);
         if (dom) {
           const container = dom.parentElement;
@@ -30,7 +30,7 @@ export default class Sizes extends EventEmitter {
             "tips: Could not find parent element ID, please check the configuration"
           );
         }
-      }else {
+      } else {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
       }
@@ -38,10 +38,14 @@ export default class Sizes extends EventEmitter {
       if (this.height < 200) {
         this.height = 1080;
       }
+      this.info()
       this.trigger("resize", null);
     };
     this.resizeHandler();
     window.addEventListener("resize", this.resizeHandler);
+  }
+  info(message = "Size changed,Present width and height:") {
+    console.log(message, this.width, this.height);
   }
   release() {
     window.removeEventListener("resize", this.resizeHandler);

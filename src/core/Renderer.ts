@@ -17,6 +17,8 @@ export default class Renderer extends BaseThree{
     }
 
     setRenderer(config:RendererConfig): void {
+        // Renderer settings
+        
         // this.instance.useLegacyLights = true
         // this.instance.toneMapping = THREE.CineonToneMapping
         // this.instance.toneMappingExposure = 1.75
