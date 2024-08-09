@@ -2,7 +2,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 import ThreeInstance from "@core/ThreeInstance";
-import { CONFIG_OPT } from "@utils/config/configOpt";
+import { CONFIG_OPT } from "@core/config/configOpt";
 import buildingOtherVertex from "@shaders/buildingOther/vertex.glsl";
 import buildingOtherFragment from "@shaders/buildingOther/fragment.glsl";
 
