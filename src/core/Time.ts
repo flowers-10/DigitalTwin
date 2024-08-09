@@ -3,13 +3,13 @@ import EventEmitter from "./EventEmitter";
 
 export default class Time extends EventEmitter {
   private clock: THREE.Clock;
-  private start;
+  public start;
   private current;
-  private elapsed;
-  private delta;
+  public elapsed;
+  public delta;
   private timer;
   private index;
-  private elapsedTime;
+  public elapsedTime;
   private animationTick: null | number;
   constructor() {
     super();
