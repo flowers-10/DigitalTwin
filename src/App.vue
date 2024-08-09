@@ -1,7 +1,6 @@
 <template>
   <div
     class="w-screen h-screen flex justify-center items-center text-9xl"
-    id=""
   >
     <canvas class="webgl" ref="canvasDom"></canvas>
   </div>
@@ -15,8 +14,6 @@ const instance = ref();
 
 onMounted(() => {
   instance.value = useThree(canvasDom.value);
-  instance.value.renderer.info();
-  instance.value.sizes.info();
 });
 onBeforeUnmount(() => {
   instance.value.dispose();

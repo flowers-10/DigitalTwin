@@ -4,6 +4,7 @@ import { ConfigOptType } from "./types/ConfigOptType";
 import { CONFIG_OPT } from "@utils/config/configOpt";
 import Mousemove from "./Mousemove";
 import Resources from "./Resources";
+import Loading from "./Loading";
 import Sizes from "./Sizes";
 import Camera from "./Camera";
 import Renderer from "./Renderer";
@@ -25,6 +26,7 @@ export default class ThreeInstance {
   public light: Light;
   public time: Time;
   public raycaster: Raycaster;
+  public loading: Loading;
   private bloomPass;
 
   constructor(canvas?: HTMLCanvasElement, config: ConfigOptType = CONFIG_OPT) {
@@ -36,13 +38,13 @@ export default class ThreeInstance {
     this._canvas = canvas || (canvass as HTMLCanvasElement);
     this._config = config;
     this.mousemove = new Mousemove(this._canvas);
-    this.resources = new Resources(this._config.sources);
     this.sizes = new Sizes(this._config.size);
     this.scene = new THREE.Scene();
     this.time = new Time();
     this.camera = new Camera(this._config.camera, this);
     this.light = new Light(this._config.light, this);
     this.raycaster = new Raycaster(this);
+    
 
     switch (this._config.rendererPass.type) {
       case "OUTLINE":
@@ -60,6 +62,8 @@ export default class ThreeInstance {
     }
 
     this.renderer = new Renderer(this._config.renderer, this);
+    this.loading = new Loading(1, this);
+    this.resources = new Resources(this._config.sources,this.loading.loadingManager);
     this.sizes.on("resize", () => {
       this.resize();
     });
@@ -70,7 +74,6 @@ export default class ThreeInstance {
 
   public setOption(option: any) {
     this._config = { ...this._config, ...option };
-    
   }
 
   resize() {
