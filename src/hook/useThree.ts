@@ -141,6 +141,23 @@ const buildingOtherUniforms = {
   },
 };
 
+const setCityLineMaterial = (object: any, instance: ThreeInstance) => {
+  const edges = new THREE.EdgesGeometry(object.geometry, 1);
+  //设置模型的材质
+  const lineMaterial = new THREE.LineBasicMaterial({
+    // 线的颜色
+    color: "rgba(38,133,254)",
+  });
+  //把数据组合起来
+  const lineS = new THREE.LineSegments(edges, lineMaterial);
+  //设置数据的位置
+  lineS.position.set(object.position.x, object.position.y, object.position.z);
+  //添加到场景
+  instance.scene.add(lineS);
+
+  lineS.rotateX(Math.PI / 2);
+};
+
 const useThree = (canvas: HTMLCanvasElement) => {
   const instance: ThreeInstance = new ThreeInstance(canvas, CONFIG_OPT);
   const initScene = new THREE.Group();
@@ -152,17 +169,11 @@ const useThree = (canvas: HTMLCanvasElement) => {
       const items = instance.resources.items[key];
       if (key === "buildingOther") {
         items.scene.children[0].children.forEach((item: any) => {
-          buildingOtherMaterial = new THREE.ShaderMaterial({
-            uniforms: buildingOtherUniforms,
-            vertexShader: buildingOtherVertex,
-            fragmentShader: buildingOtherFragment,
-            transparent: true,
-            side: THREE.DoubleSide,
-          });
-          item.material = buildingOtherMaterial;
+          setCityLineMaterial(item,instance)
         });
+      }else {
+        items.show ? initScene.add(items.scene) : changScene.add(items.scene);
       }
-      items.show ? initScene.add(items.scene) : changScene.add(items.scene);
     }
     initScene.add(mesh);
     createGsapAnimation(
