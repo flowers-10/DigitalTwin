@@ -45,7 +45,7 @@ export default class ThreeInstance {
     this.light = new Light(this._config.light, this);
     this.raycaster = new Raycaster(this);
     
-
+    this.renderer = new Renderer(this._config.renderer, this);
     switch (this._config.rendererPass.type) {
       case "OUTLINE":
         break;
@@ -60,8 +60,6 @@ export default class ThreeInstance {
       default:
         break;
     }
-
-    this.renderer = new Renderer(this._config.renderer, this);
     this.loading = new Loading(1, this);
     this.resources = new Resources(this._config.sources,this.loading.loadingManager);
     this.sizes.on("resize", () => {

@@ -1,4 +1,4 @@
-import { ConfigOptType } from '@core/types/ConfigOptType'
+import { ConfigOptType } from "@core/types/ConfigOptType";
 
 export const CONFIG_OPT: ConfigOptType = {
   el: "_canvas-scene",
@@ -30,7 +30,7 @@ export const CONFIG_OPT: ConfigOptType = {
     id: "_Background_3D",
   },
   rendererPass: {
-    type: "NONE",
+    type: "BLOOM",
     outlineConfig: {
       edgeStrength: 3,
       edgeGlow: 1,
@@ -50,22 +50,16 @@ export const CONFIG_OPT: ConfigOptType = {
     antialias: true,
     alpha: true,
     clearAlpha: 0,
-    clearColor: "",
+    clearColor: "#000000",
   },
   light: [
     {
-      type: "point",
-      color: "#3e99e5",
-      intensity: 3,
-      distance: 500,
+      type: "ambient",
+      color: "#ffffff",
+      intensity: 0.8,
       helper: false,
       lightId: 0,
       lightName: "光源1",
-      position: {
-        x: -10,
-        y: 48,
-        z: 50,
-      },
     },
   ],
   sources: [],

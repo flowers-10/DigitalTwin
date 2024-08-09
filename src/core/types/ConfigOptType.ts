@@ -14,16 +14,17 @@ export type SourcesItems = {
   name: string;
   type: SourcesType;
   path: string;
+  show: boolean;
 };
 export type LightItems = {
   type: LightType;
   color: string;
   intensity: number;
-  distance: number;
+  distance?: number;
   helper: boolean;
   lightId: number;
   lightName: string;
-  position: PositionType;
+  position?: PositionType;
   groundColor?: string;
   angle?: number;
   penumbra?: number;

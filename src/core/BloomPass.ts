@@ -43,30 +43,30 @@ export default class BloomPass extends BaseThree {
     );
     this.bloomComposer.addPass(bloomPass);
 
-    const shaderPass = new ShaderPass(
-      new THREE.ShaderMaterial({
-        uniforms: {
-          baseTexture: { value: null },
-          bloomTexture: { value: this.bloomComposer.renderTarget2.texture },
-        },
-        vertexShader: `varying vec2 vUv;
-        void main() {
-        vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-        }`,
-        fragmentShader: `uniform sampler2D baseTexture; 
-          uniform sampler2D bloomTexture; 
-          varying vec2 vUv;
+    // const shaderPass = new ShaderPass(
+    //   new THREE.ShaderMaterial({
+    //     uniforms: {
+    //       baseTexture: { value: null },
+    //       bloomTexture: { value: this.bloomComposer.renderTarget2.texture },
+    //     },
+    //     vertexShader: `varying vec2 vUv;
+    //     void main() {
+    //     vUv = uv;
+    //     gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    //     }`,
+    //     fragmentShader: `uniform sampler2D baseTexture; 
+    //       uniform sampler2D bloomTexture; 
+    //       varying vec2 vUv;
 
-          void main() {
-            gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
-          }`,
-        defines: {},
-      }),
-      "baseTexture"
-    );
-    shaderPass.needsSwap = true;
-    this.finalComposer.addPass(shaderPass);
+    //       void main() {
+    //         gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+    //       }`,
+    //     defines: {},
+    //   }),
+    //   "baseTexture"
+    // );
+    // shaderPass.needsSwap = true;
+    // this.finalComposer.addPass(shaderPass);
   }
   darkenNonBloomed = (obj: any) => {
     if (obj.isMesh && this.bloomLayer.test(obj.layers) === false) {

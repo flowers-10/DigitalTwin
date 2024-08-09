@@ -62,7 +62,7 @@ export default class Light extends BaseThree{
                     default:
                         break;
                 }
-                light.position.set(position.x, position.y, position.z);
+                light.position.set(position?.x, position?.y, position?.z);
                 if (light.isSpotLight) {
                     this.light.add(light.target);
                 }
