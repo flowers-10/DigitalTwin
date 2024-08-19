@@ -1,13 +1,12 @@
 import * as THREE from "three";
 import gsap from "gsap";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-import ThreeInstance from "@core/ThreeInstance";
-import { CONFIG_OPT } from "@core/config/configOpt";
+import { ThreeInstance } from "three-auto";
 import buildingOtherVertex from "@shaders/buildingOther/vertex.glsl";
 import buildingOtherFragment from "@shaders/buildingOther/fragment.glsl";
 
-//  custom config
-CONFIG_OPT.sources = [
+// todo:  custom config
+const sources = [
   {
     name: "buildingTransparent",
     type: "GLTF",
@@ -57,15 +56,6 @@ CONFIG_OPT.sources = [
     show: true,
   },
 ];
-
-CONFIG_OPT.camera.position = {
-  x: -200,
-  y:  400,
-  z: -200,
-};
-CONFIG_OPT.camera.fov = 75;
-CONFIG_OPT.camera.near = 20;
-
 const createGsapAnimation = (
   position: THREE.Vector3,
   position_: THREE.Vector3
@@ -79,9 +69,7 @@ const createGsapAnimation = (
     yoyoEase: true,
   });
 };
-
 const geometry = new THREE.BufferGeometry(); //声明一个空几何体对象
-
 // wall Vertex
 const posArr = [
   -125, -20, 0, 210, -40, 0, 210, -40, 40, -125, -20, 0, 210, -40, 40, -125,
@@ -91,7 +79,6 @@ const posArr = [
   180, 165, 40, -130, 134, 0, -125, -20, 0, -125, -20, 40, -130, 134, 0, -125,
   -20, 40, -130, 134, 40,
 ];
-
 // 设置几何体attributes属性的位置position属性
 geometry.attributes.position = new THREE.BufferAttribute(
   new Float32Array(posArr),
@@ -159,7 +146,10 @@ const setCityLineMaterial = (object: any, instance: ThreeInstance) => {
 };
 
 const useThree = (canvas: HTMLCanvasElement) => {
-  const instance: ThreeInstance = new ThreeInstance(canvas, CONFIG_OPT);
+  const instance: ThreeInstance = new ThreeInstance(canvas);
+  instance.camera.instance.fov = 75
+  instance.camera.instance.near = 20
+  instance.camera.instance.position.set(-200,400,-200)
   const initScene = new THREE.Group();
   const changScene = new THREE.Group();
   instance.scene.add(initScene);
@@ -169,9 +159,9 @@ const useThree = (canvas: HTMLCanvasElement) => {
       const items = instance.resources.items[key];
       if (key === "buildingOther") {
         items.scene.children[0].children.forEach((item: any) => {
-          setCityLineMaterial(item,instance)
+          setCityLineMaterial(item, instance);
         });
-      }else {
+      } else {
         items.show ? initScene.add(items.scene) : changScene.add(items.scene);
       }
     }
