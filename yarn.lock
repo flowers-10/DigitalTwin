@@ -1345,6 +1345,11 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
+three-auto@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/three-auto/-/three-auto-0.1.8.tgz#52277528ebd1ca257a9f5284595c604ce79490a5"
+  integrity sha512-ZVZ+QCGhJjlZ/9AfcnmCtUQL22wBkJ893YOocM2/YX60yJTmuS5cIPKQ4JV5aXA5GbK0lhe46j8hcVbMW1NF6A==
+
 three-custom-shader-material@^5.4.0:
   version "5.4.0"
   resolved "https://registry.npmmirror.com/three-custom-shader-material/-/three-custom-shader-material-5.4.0.tgz#ee571c335a028a9b75c703b2ba83199176000847"
