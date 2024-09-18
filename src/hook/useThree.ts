@@ -1,12 +1,13 @@
 import * as THREE from "three";
 import gsap from "gsap";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
+import { BloomEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
 import * as AUTO from "three-auto";
 import buildingOtherVertex from "@shaders/buildingOther/vertex.glsl";
 import buildingOtherFragment from "@shaders/buildingOther/fragment.glsl";
 
 // todo:  custom config
-const sources:AUTO.SourcesItems[] = [
+const sources: AUTO.SourcesItems[] = [
   {
     name: "buildingTransparent",
     type: "GLTF",
@@ -150,34 +151,31 @@ const setCityLineMaterial = (object: any, instance: AUTO.ThreeAuto) => {
 
 const useThree = (canvas: HTMLCanvasElement) => {
   const instance: AUTO.ThreeAuto = new AUTO.ThreeAuto(canvas);
-  const resources = new AUTO.Resources(sources)
-  instance.camera.instance.fov = 75;
+  const resources = new AUTO.Resources(sources);
+  (instance.camera.instance as THREE.PerspectiveCamera).fov = 75;
   instance.camera.instance.near = 20;
   instance.camera.instance.position.set(-200, 400, -200);
   const initScene = new THREE.Group();
   const changScene = new THREE.Group();
   instance.scene.add(initScene);
   instance.scene.add(changScene);
+  const customPass = new AUTO.CustomPass(instance)
+  customPass.composer.addPass(new EffectPass(instance._camera, new BloomEffect()))
+  instance._renderer.setClearColor('#000',0.7)
   const wallMesh = createWall()
   resources.on("ready", () => {
-    for (const key in resources.items) {
-      const items = resources.items[key];
-      // if (key === "buildingOther") {
-      //   items.scene.children[0].children.forEach((item: any) => {
-      //     setCityLineMaterial(item, instance);
-      //   });
-      // } else {
-        items.show ? initScene.add(items.scene) : changScene.add(items.scene);
-      // }
+    for (const key of resources.items) {
+      key[1].show ? initScene.add(key[1].scene) : changScene.add(key[1].scene);
     }
-    // initScene.add(wallMesh);
+    initScene.add(wallMesh);
     createGsapAnimation(
       instance.camera.instance.position,
       new THREE.Vector3(-20, 360, 166)
     );
   });
   instance.time.on("tick", () => {
-    // wallMesh.material.uniforms.iTime.value = instance.time.elapsedTime;
+    customPass.composer.render()
+    wallMesh.material.uniforms.iTime.value = instance.time.elapsedTime;
     // buildingOtherUniforms.iTime.value = instance.time.elapsedTime;
     // if (
     //   buildingOtherUniforms.height.value > buildingOtherUniforms.maxHeight.value
