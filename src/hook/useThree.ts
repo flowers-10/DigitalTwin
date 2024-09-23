@@ -3,6 +3,8 @@ import gsap from "gsap";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 import { BloomEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
 import * as AUTO from "three-auto";
+import * as dat from "lil-gui";
+
 import buildingOtherVertex from "@shaders/buildingOther/vertex.glsl";
 import buildingOtherFragment from "@shaders/buildingOther/fragment.glsl";
 
@@ -150,27 +152,43 @@ const setCityLineMaterial = (object: any, instance: AUTO.ThreeAuto) => {
 };
 
 const useThree = (canvas: HTMLCanvasElement) => {
+  const gui = new dat.GUI();
+
   const instance: AUTO.ThreeAuto = new AUTO.ThreeAuto(canvas);
   const resources = new AUTO.Resources(sources);
+  gui.add(instance._camera.position, "x").min(-1000).max(3000).step(1).name("x轴");
+  gui.add(instance._camera.position, "y").min(-1000).max(3000).step(1).name("y轴");
+  gui.add(instance._camera.position, "z").min(-1000).max(3000).step(1).name("z轴");
+  gui.add(instance._camera, "near").min(-1000).max(3000).step(1).name("近");
+  gui.add(instance._camera, "far").min(-1000).max(3000).step(1).name("远");
+  gui.add(instance._camera, "fov").min(-1000).max(3000).step(1).name("视口");
+  gui.add(instance.scene.position, "x").min(-1000).max(3000).step(1).name("x轴");
+  gui.add(instance.scene.position, "y").min(-1000).max(3000).step(1).name("y轴");
+  gui.add(instance.scene.position, "z").min(-1000).max(3000).step(1).name("z轴");
   (instance.camera.instance as THREE.PerspectiveCamera).fov = 75;
   instance.camera.instance.near = 20;
-  instance.camera.instance.position.set(-200, 400, -200);
+  instance.camera.instance.position.set(0, 0, 0);
   const initScene = new THREE.Group();
   const changScene = new THREE.Group();
   instance.scene.add(initScene);
-  instance.scene.add(changScene);
   const customPass = new AUTO.CustomPass(instance)
   customPass.composer.addPass(new EffectPass(instance._camera, new BloomEffect()))
-  instance._renderer.setClearColor('#000',0.7)
+  instance._renderer.setClearColor('#000', 0.7)
   const wallMesh = createWall()
   resources.on("ready", () => {
-    for (const key of resources.items) {
-      key[1].show ? initScene.add(key[1].scene) : changScene.add(key[1].scene);
-    }
+    resources.sources.forEach(item => {
+      if (item.show) {
+        const scene = resources.items.get(item.name).scene
+        initScene.add(scene)
+      } else {
+        const scene = resources.items.get(item.name).scene
+        changScene.add(scene);
+      } 
+    });
     initScene.add(wallMesh);
     createGsapAnimation(
       instance.camera.instance.position,
-      new THREE.Vector3(-20, 360, 166)
+      new THREE.Vector3(-50, 50, 400)
     );
   });
   instance.time.on("tick", () => {
