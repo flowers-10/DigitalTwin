@@ -176,7 +176,7 @@ const useThree = (canvas: HTMLCanvasElement) => {
   instance._renderer.setClearColor('#000', 0.7)
   const wallMesh = createWall()
   resources.on("ready", () => {
-    resources.sources.forEach(item => {
+    sources.forEach((item: AUTO.SourcesItems) => {
       if (item.show) {
         const scene = resources.items.get(item.name).scene
         initScene.add(scene)
